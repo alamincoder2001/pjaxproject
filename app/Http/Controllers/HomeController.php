@@ -21,4 +21,16 @@ class HomeController extends Controller
         
         return view('about', compact('users'));
     }
+
+    public function update(Request $request)
+    {
+        try {
+            $data = User::find($request->id);
+            $data->name = $request->name;
+            $data->save();
+            return ['status' => true, 'msg' => "User name update"];
+        } catch (\Throwable $th) {
+            return ['status' => false, 'msg' => $th->getMessage()];
+        }
+    }
 }
