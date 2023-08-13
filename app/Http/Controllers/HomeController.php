@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,10 +14,11 @@ class HomeController extends Controller
 
     public function about(Request $request)
     {
+        $users = User::latest()->get();
         if ($request->header('X-PJAX')) {
-            return view('about-content');
+            return view('about-content', compact('users'));
         }
         
-        return view('about');
+        return view('about', compact('users'));
     }
 }
